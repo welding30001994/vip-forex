@@ -1,0 +1,790 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VIP Forex - Acceso Exclusivo</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #0c0e2a;
+            --secondary-color: #1a1f4b;
+            --accent-color: #4e54c8;
+            --highlight-color: #8f94fb;
+            --text-color: #ffffff;
+            --success-color: #00e676;
+            --error-color: #ff3860;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: var(--text-color);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow-x: hidden;
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 450px;
+            padding: 20px;
+        }
+        
+        .card {
+            background: rgba(13, 17, 45, 0.8);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(79, 84, 200, 0.1), transparent);
+            transform: rotate(45deg);
+            z-index: 0;
+            animation: shine 6s infinite;
+        }
+        
+        @keyframes shine {
+            0% {
+                left: -100%;
+            }
+            20% {
+                left: 100%;
+            }
+            100% {
+                left: 100%;
+            }
+        }
+        
+        .card-content {
+            position: relative;
+            z-index: 1;
+        }
+        
+        .logo {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .logo h1 {
+            font-size: 28px;
+            background: linear-gradient(to right, var(--accent-color), var(--highlight-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+        
+        .logo span {
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.7);
+            letter-spacing: 1px;
+        }
+        
+        .tabs {
+            display: flex;
+            margin-bottom: 20px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            padding: 5px;
+        }
+        
+        .tab {
+            flex: 1;
+            padding: 10px;
+            text-align: center;
+            cursor: pointer;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+        
+        .tab.active {
+            background: linear-gradient(to right, var(--accent-color), var(--highlight-color));
+            color: white;
+        }
+        
+        .form-container {
+            display: none;
+        }
+        
+        .form-container.active {
+            display: block;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+            position: relative;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.8);
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: 15px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            color: var(--text-color);
+            font-size: 16px;
+            transition: all 0.3s ease;
+        }
+        
+        .form-control:focus {
+            outline: none;
+            border-color: var(--accent-color);
+            box-shadow: 0 0 15px rgba(78, 84, 200, 0.5);
+        }
+        
+        .phone-input {
+            display: flex;
+            align-items: center;
+        }
+        
+        .phone-input select {
+            width: 30%;
+            padding: 15px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 10px 0 0 10px;
+            color: var(--text-color);
+            margin-right: 1px;
+        }
+        
+        .phone-input input {
+            width: 70%;
+            border-radius: 0 10px 10px 0;
+        }
+        
+        .btn {
+            width: 100%;
+            padding: 15px;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(to right, var(--accent-color), var(--highlight-color));
+            color: white;
+            box-shadow: 0 5px 15px rgba(78, 84, 200, 0.4);
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(78, 84, 200, 0.6);
+        }
+        
+        .btn-google {
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 15px;
+        }
+        
+        .btn-google:hover {
+            background: rgba(255, 255, 255, 0.15);
+        }
+        
+        .btn-facebook {
+            background: rgba(59, 89, 152, 0.2);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 25px;
+        }
+        
+        .btn-facebook:hover {
+            background: rgba(59, 89, 152, 0.3);
+        }
+        
+        .btn i {
+            margin-right: 10px;
+            font-size: 18px;
+        }
+        
+        .divider {
+            display: flex;
+            align-items: center;
+            margin: 25px 0;
+        }
+        
+        .divider::before, .divider::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: rgba(255, 255, 255, 0.1);
+        }
+        
+        .divider span {
+            padding: 0 15px;
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 14px;
+        }
+        
+        .terms {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 12px;
+            color: rgba(255, 255, 255, 0.6);
+        }
+        
+        .terms a {
+            color: var(--highlight-color);
+            text-decoration: none;
+        }
+        
+        .error-message {
+            color: var(--error-color);
+            font-size: 14px;
+            margin-top: 5px;
+            display: none;
+        }
+        
+        .particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden;
+        }
+        
+        .particle {
+            position: absolute;
+            border-radius: 50%;
+            background: linear-gradient(to right, var(--accent-color), var(--highlight-color));
+            opacity: 0.3;
+            animation: float 15s infinite linear;
+        }
+        
+        @keyframes float {
+            0% {
+                transform: translateY(0) translateX(0) rotate(0deg);
+            }
+            100% {
+                transform: translateY(-100vh) translateX(100vw) rotate(360deg);
+            }
+        }
+        
+        .notification {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            padding: 15px 25px;
+            background: var(--secondary-color);
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            transform: translateY(100px);
+            opacity: 0;
+            transition: all 0.5s ease;
+            z-index: 1000;
+        }
+        
+        .notification.show {
+            transform: translateY(0);
+            opacity: 1;
+        }
+        
+        @media (max-width: 480px) {
+            .container {
+                padding: 10px;
+            }
+            
+            .card {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="particles" id="particles"></div>
+    
+    <div class="container">
+        <div class="card">
+            <div class="card-content">
+                <div class="logo">
+                    <h1>VIP Forex</h1>
+                    <span>ACCESO EXCLUSIVO AL MERCADO</span>
+                </div>
+                
+                <div class="tabs">
+                    <div class="tab active" data-tab="login">Iniciar Sesión</div>
+                    <div class="tab" data-tab="register">Registrarse</div>
+                </div>
+                
+                <!-- Formulario de Login -->
+                <div class="form-container active" id="login-form">
+                    <button class="btn btn-google" id="google-login">
+                        <i class="fab fa-google"></i> Iniciar con Google
+                    </button>
+                    
+                    <button class="btn btn-facebook" id="facebook-login">
+                        <i class="fab fa-facebook-f"></i> Iniciar con Facebook
+                    </button>
+                    
+                    <div class="divider">
+                        <span>O</span>
+                    </div>
+                    
+                    <form id="loginForm">
+                        <div class="form-group">
+                            <label for="login-email">Correo electrónico o Teléfono</label>
+                            <input type="text" id="login-email" class="form-control" placeholder="tu@email.com o +593..." required>
+                            <div class="error-message" id="login-email-error">Por favor ingresa un email o teléfono válido</div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="login-password">Contraseña</label>
+                            <input type="password" id="login-password" class="form-control" placeholder="Tu contraseña" required>
+                            <div class="error-message" id="login-password-error">La contraseña es requerida</div>
+                        </div>
+                        
+                        <button type="submit" class="btn btn-primary">Iniciar Sesión</button>
+                    </form>
+                    
+                    <div class="terms">
+                        ¿Olvidaste tu contraseña? <a href="#" id="forgot-password">Recuperar aquí</a>
+                    </div>
+                </div>
+                
+                <!-- Formulario de Registro -->
+                <div class="form-container" id="register-form">
+                    <button class="btn btn-google" id="google-register">
+                        <i class="fab fa-google"></i> Registrarse con Google
+                    </button>
+                    
+                    <button class="btn btn-facebook" id="facebook-register">
+                        <i class="fab fa-facebook-f"></i> Registrarse con Facebook
+                    </button>
+                    
+                    <div class="divider">
+                        <span>O</span>
+                    </div>
+                    
+                    <form id="registerForm">
+                        <div class="form-group">
+                            <label for="name">Nombre completo</label>
+                            <input type="text" id="name" class="form-control" placeholder="Ingresa tu nombre completo" required>
+                            <div class="error-message" id="name-error">El nombre es requerido</div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="email">Correo electrónico</label>
+                            <input type="email" id="email" class="form-control" placeholder="tu@email.com" required>
+                            <div class="error-message" id="email-error">Por favor ingresa un email válido</div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="phone">Número de teléfono</label>
+                            <div class="phone-input">
+                                <select id="countryCode">
+                                    <option value="+1">+1 USA</option>
+                                    <option value="+52">+52 MEX</option>
+                                    <option value="+34">+34 ESP</option>
+                                    <option value="+54">+54 ARG</option>
+                                    <option value="+57">+57 COL</option>
+                                    <option value="+51">+51 PER</option>
+                                    <option value="+56">+56 CHL</option>
+                                    <option value="+55">+55 BRA</option>
+                                    <option value="+593" selected>+593 ECU</option>
+                                    <option value="+58">+58 VEN</option>
+                                    <option value="+506">+506 CRI</option>
+                                    <option value="+507">+507 PAN</option>
+                                    <option value="+502">+502 GTM</option>
+                                    <option value="+503">+503 SLV</option>
+                                    <option value="+504">+504 HND</option>
+                                    <option value="+505">+505 NIC</option>
+                                    <option value="+595">+595 PRY</option>
+                                    <option value="+598">+598 URY</option>
+                                    <option value="+591">+591 BOL</option>
+                                    <option value="+592">+592 GUY</option>
+                                    <option value="+594">+594 GUF</option>
+                                    <option value="+686">+686 KIR</option>
+                                </select>
+                                <input type="tel" id="phone" class="form-control" placeholder="Número de teléfono" required>
+                            </div>
+                            <div class="error-message" id="phone-error">Por favor ingresa un número válido</div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="password">Contraseña</label>
+                            <input type="password" id="password" class="form-control" placeholder="Crea una contraseña segura" required>
+                            <div class="error-message" id="password-error">La contraseña debe tener al menos 6 caracteres</div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="confirm-password">Confirmar Contraseña</label>
+                            <input type="password" id="confirm-password" class="form-control" placeholder="Repite tu contraseña" required>
+                            <div class="error-message" id="confirm-password-error">Las contraseñas no coinciden</div>
+                        </div>
+                        
+                        <button type="submit" class="btn btn-primary">Registrarse</button>
+                    </form>
+                    
+                    <div class="terms">
+                        Al registrarte, aceptas nuestros <a href="#">Términos de Servicio</a> y <a href="#">Política de Privacidad</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="notification" id="notification">
+        <i class="fas fa-check-circle" style="color: var(--success-color); margin-right: 10px;"></i>
+        <span id="notificationText">Mensaje de notificación</span>
+    </div>
+
+    <script>
+        // Inicializar Firebase con la configuración proporcionada
+        const firebaseConfig = {
+            apiKey: "AIzaSyB1DbJlyzYj67eAoCoVle6vtJN4fJ8WcF8",
+            authDomain: "vip-forex.firebaseapp.com",
+            databaseURL: "https://vip-forex-default-rtdb.firebaseio.com",
+            projectId: "vip-forex",
+            storageBucket: "vip-forex.firebasestorage.app",
+            messagingSenderId: "949651155068",
+            appId: "1:949651155068:web:d527a3e5ca1f53f65801f9",
+            measurementId: "G-K0QTGXWT6G"
+        };
+        
+        // Aquí iría la inicialización de Firebase
+        // firebase.initializeApp(firebaseConfig);
+        
+        // Crear partículas de fondo
+        function createParticles() {
+            const particlesContainer = document.getElementById('particles');
+            const particleCount = 20;
+            
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.classList.add('particle');
+                
+                const size = Math.random() * 20 + 5;
+                particle.style.width = `${size}px`;
+                particle.style.height = `${size}px`;
+                
+                particle.style.left = `${Math.random() * 100}vw`;
+                particle.style.top = `${Math.random() * 100}vh`;
+                
+                const animationDuration = Math.random() * 20 + 15;
+                particle.style.animationDuration = `${animationDuration}s`;
+                particle.style.animationDelay = `${Math.random() * 5}s`;
+                
+                particlesContainer.appendChild(particle);
+            }
+        }
+        
+        // Mostrar notificación
+        function showNotification(message, isSuccess = true) {
+            const notification = document.getElementById('notification');
+            const notificationText = document.getElementById('notificationText');
+            const icon = notification.querySelector('i');
+            
+            notificationText.textContent = message;
+            
+            if (isSuccess) {
+                icon.className = 'fas fa-check-circle';
+                icon.style.color = 'var(--success-color)';
+            } else {
+                icon.className = 'fas fa-exclamation-circle';
+                icon.style.color = 'var(--error-color)';
+            }
+            
+            notification.classList.add('show');
+            
+            setTimeout(() => {
+                notification.classList.remove('show');
+            }, 5000);
+        }
+        
+        // Cambiar entre pestañas
+        function setupTabs() {
+            const tabs = document.querySelectorAll('.tab');
+            const forms = document.querySelectorAll('.form-container');
+            
+            tabs.forEach(tab => {
+                tab.addEventListener('click', () => {
+                    const tabId = tab.getAttribute('data-tab');
+                    
+                    // Actualizar pestañas activas
+                    tabs.forEach(t => t.classList.remove('active'));
+                    tab.classList.add('active');
+                    
+                    // Mostrar formulario correspondiente
+                    forms.forEach(form => {
+                        form.classList.remove('active');
+                        if (form.id === `${tabId}-form`) {
+                            form.classList.add('active');
+                        }
+                    });
+                });
+            });
+        }
+        
+        // Validar formularios
+        function setupFormValidation() {
+            // Validación de registro
+            const registerForm = document.getElementById('registerForm');
+            
+            registerForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                let isValid = true;
+                
+                // Validar nombre
+                const name = document.getElementById('name');
+                if (!name.value.trim()) {
+                    document.getElementById('name-error').style.display = 'block';
+                    isValid = false;
+                } else {
+                    document.getElementById('name-error').style.display = 'none';
+                }
+                
+                // Validar email
+                const email = document.getElementById('email');
+                const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                if (!emailPattern.test(email.value)) {
+                    document.getElementById('email-error').style.display = 'block';
+                    isValid = false;
+                } else {
+                    document.getElementById('email-error').style.display = 'none';
+                }
+                
+                // Validar teléfono
+                const phone = document.getElementById('phone');
+                if (!phone.value.trim() || isNaN(phone.value)) {
+                    document.getElementById('phone-error').style.display = 'block';
+                    isValid = false;
+                } else {
+                    document.getElementById('phone-error').style.display = 'none';
+                }
+                
+                // Validar contraseña
+                const password = document.getElementById('password');
+                if (password.value.length < 6) {
+                    document.getElementById('password-error').style.display = 'block';
+                    isValid = false;
+                } else {
+                    document.getElementById('password-error').style.display = 'none';
+                }
+                
+                // Validar confirmación de contraseña
+                const confirmPassword = document.getElementById('confirm-password');
+                if (password.value !== confirmPassword.value) {
+                    document.getElementById('confirm-password-error').style.display = 'block';
+                    isValid = false;
+                } else {
+                    document.getElementById('confirm-password-error').style.display = 'none';
+                }
+                
+                if (isValid) {
+                    // Aquí iría el registro con Firebase
+                    const countryCode = document.getElementById('countryCode');
+                    const phoneNumber = countryCode.value + phone.value;
+                    
+                    showNotification('Registro exitoso. Redirigiendo...');
+                    
+                    // Guardar datos en localStorage
+                    const userData = {
+                        name: name.value,
+                        email: email.value,
+                        phone: phoneNumber,
+                        countryCode: countryCode.value,
+                        registered: true
+                    };
+                    
+                    localStorage.setItem('vipForexUser', JSON.stringify(userData));
+                    
+                    // Redirigir después de 2 segundos
+                    setTimeout(() => {
+                        window.location.href = 'dashboard.html';
+                    }, 2000);
+                }
+            });
+            
+            // Validación de login
+            const loginForm = document.getElementById('loginForm');
+            
+            loginForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                let isValid = true;
+                
+                // Validar email o teléfono
+                const loginInput = document.getElementById('login-email');
+                const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                const phonePattern = /^\+[0-9]{1,4}[0-9]{6,}$/;
+                
+                if (!emailPattern.test(loginInput.value) && !phonePattern.test(loginInput.value)) {
+                    document.getElementById('login-email-error').style.display = 'block';
+                    isValid = false;
+                } else {
+                    document.getElementById('login-email-error').style.display = 'none';
+                }
+                
+                // Validar contraseña
+                const password = document.getElementById('login-password');
+                if (!password.value) {
+                    document.getElementById('login-password-error').style.display = 'block';
+                    isValid = false;
+                } else {
+                    document.getElementById('login-password-error').style.display = 'none';
+                }
+                
+                if (isValid) {
+                    // Aquí iría la autenticación con Firebase
+                    // Por ahora simulamos un login exitoso
+                    
+                    // Comprobar si el usuario existe en localStorage
+                    const storedUser = localStorage.getItem('vipForexUser');
+                    
+                    if (storedUser) {
+                        const userData = JSON.parse(storedUser);
+                        
+                        if (userData.email === loginInput.value || userData.phone === loginInput.value) {
+                            showNotification('Inicio de sesión exitoso. Redirigiendo...');
+                            
+                            // Redirigir después de 2 segundos
+                            setTimeout(() => {
+                                window.location.href = 'dashboard.html';
+                            }, 2000);
+                        } else {
+                            showNotification('Credenciales incorrectas', false);
+                        }
+                    } else {
+                        showNotification('Usuario no registrado', false);
+                    }
+                }
+            });
+        }
+        
+        // Configurar autenticación social
+        function setupSocialAuth() {
+            // Google
+            document.getElementById('google-login').addEventListener('click', function() {
+                // Aquí iría la autenticación con Google
+                showNotification('Iniciando sesión con Google...');
+                
+                // Simular autenticación exitosa
+                setTimeout(() => {
+                    const userData = {
+                        name: 'Usuario Google',
+                        email: 'usuario@gmail.com',
+                        provider: 'google',
+                        registered: true
+                    };
+                    
+                    localStorage.setItem('vipForexUser', JSON.stringify(userData));
+                    window.location.href = 'dashboard.html';
+                }, 1500);
+            });
+            
+            document.getElementById('google-register').addEventListener('click', function() {
+                // Aquí iría el registro con Google
+                showNotification('Registrando con Google...');
+                
+                // Simular registro exitoso
+                setTimeout(() => {
+                    const userData = {
+                        name: 'Usuario Google',
+                        email: 'usuario@gmail.com',
+                        provider: 'google',
+                        registered: true
+                    };
+                    
+                    localStorage.setItem('vipForexUser', JSON.stringify(userData));
+                    window.location.href = 'dashboard.html';
+                }, 1500);
+            });
+            
+            // Facebook
+            document.getElementById('facebook-login').addEventListener('click', function() {
+                // Aquí iría la autenticación con Facebook
+                showNotification('Iniciando sesión con Facebook...');
+                
+                // Simular autenticación exitosa
+                setTimeout(() => {
+                    const userData = {
+                        name: 'Usuario Facebook',
+                        email: 'usuario@facebook.com',
+                        provider: 'facebook',
+                        registered: true
+                    };
+                    
+                    localStorage.setItem('vipForexUser', JSON.stringify(userData));
+                    window.location.href = 'dashboard.html';
+                }, 1500);
+            });
+            
+            document.getElementById('facebook-register').addEventListener('click', function() {
+                // Aquí iría el registro con Facebook
+                showNotification('Registrando con Facebook...');
+                
+                // Simular registro exitoso
+                setTimeout(() => {
+                    const userData = {
+                        name: 'Usuario Facebook',
+                        email: 'usuario@facebook.com',
+                        provider: 'facebook',
+                        registered: true
+                    };
+                    
+                    localStorage.setItem('vipForexUser', JSON.stringify(userData));
+                    window.location.href = 'dashboard.html';
+                }, 1500);
+            });
+        }
+        
+        // Inicializar
+        window.addEventListener('DOMContentLoaded', () => {
+            createParticles();
+            setupTabs();
+            setupFormValidation();
+            setupSocialAuth();
+            
+            // Comprobar si ya está logueado
+            const userData = localStorage.getItem('vipForexUser');
+            if (userData) {
+                const user = JSON.parse(userData);
+                if (user.registered) {
+                    showNotification('Ya has iniciado sesión. Redirigiendo...');
+                    setTimeout(() => {
+                        window.location.href = 'dashboard.html';
+                    }, 2000);
+                }
+            }
+        });
+    </script>
+</body>
+</html>
